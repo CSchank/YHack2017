@@ -1,7 +1,7 @@
 
 import numpy
 import pandas
-
+import tensorflow as tf
 #import keras.backend as K
 from numpy import genfromtxt
 from keras.models import Sequential
