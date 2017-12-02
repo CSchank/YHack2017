@@ -31,8 +31,8 @@ with tf.device('/gpu:0'):
 
 
 	model = Sequential()
-	model.add(Dense(10, input_dim=13, kernel_initializer='normal', activation='relu'))
-	model.add(Dense(6, kernel_initializer='normal', activation='relu'))
+	model.add(Dense(200, input_dim=13, kernel_initializer='normal', activation='relu'))
+	#model.add(Dense(6, kernel_initializer='normal', activation='relu'))
 	model.add(Dense(1, kernel_initializer='normal'))
 		# Compile model
 	model.compile(loss='mean_squared_error', optimizer='adam')
