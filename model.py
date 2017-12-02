@@ -13,34 +13,35 @@ from sklearn.model_selection import KFold
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
 # load dataset
-dataframe = pandas.read_csv("housing.csv", delim_whitespace=True, header=None)
-dataset = dataframe.values
+#dataframe = pandas.read_csv("housing.csv", delim_whitespace=True, header=None)
+#dataset = dataframe.values
 
 #my_data = genfromtxt('housing.csv', delimiter=',')
 # split into input (X) and output (Y) variables
 #X = dataset[:,0:12]
 #Y = dataset[:,13]
-seed = 7
-(x_train,y_train), (x_test,y_test) = boston_housing.load_data()
-# define base model
-	
-# define wider model
-#def wider_model():
-	# create model
+with tf.device('/gpu:0'):
+	seed = 7
+	(x_train,y_train), (x_test,y_test) = boston_housing.load_data()
+	# define base model
+		
+	# define wider model
+	#def wider_model():
+		# create model
 
 
-model = Sequential()
-model.add(Dense(10, input_dim=13, kernel_initializer='normal', activation='relu'))
-model.add(Dense(6, kernel_initializer='normal', activation='relu'))
-model.add(Dense(1, kernel_initializer='normal'))
-	# Compile model
-model.compile(loss='mean_squared_error', optimizer='adam')
-history = model.fit(x_train,y_train,epochs = 800, batch_size = 10)
-score = model.evaluate(x_test,y_test)
-print(history.history.keys())
+	model = Sequential()
+	model.add(Dense(10, input_dim=13, kernel_initializer='normal', activation='relu'))
+	model.add(Dense(6, kernel_initializer='normal', activation='relu'))
+	model.add(Dense(1, kernel_initializer='normal'))
+		# Compile model
+	model.compile(loss='mean_squared_error', optimizer='adam')
+	history = model.fit(x_train,y_train,epochs = 800, batch_size = 10)
+	score = model.evaluate(x_test,y_test)
+	print(history.history.keys())
 
-#print('Test loss: ', score)
-	#return model
+	#print('Test loss: ', score)
+		#return model
 
 
 
