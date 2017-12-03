@@ -24,55 +24,58 @@ class myHandler(BaseHTTPRequestHandler):
         return
 
     def do_POST(self):
-        if self.path == "/quote":
-            length = int(self.headers["Content-Length"])
-            request = str(self.rfile.read(length), "utf-8")
-            reqdict = simplejson.loads(request)
-            print(reqdict)
-            age = reqdict["age"]
-            sex = reqdict["sex"]
-            height = reqdict["height"]
-            weight = reqdict["weight"]
-            state = reqdict["state"]
-            long = reqdict["longitude"]
-            lat = reqdict["latitude"]
-            marst = reqdict["marital"]
-            tobac = reqdict["tobacco"]
-            peepcv = reqdict["dependents"]
-            optins = reqdict["optins"]
-            anninc = reqdict["annualincome"]
-            preconds = genCatStr(simplejson.loads(reqdict["medical"]))
+        try:
+            if self.path == "/quote":
+                length = int(self.headers["Content-Length"])
+                request = str(self.rfile.read(length), "utf-8")
+                reqdict = simplejson.loads(request)
+                print(reqdict)
+                age = reqdict["age"]
+                sex = reqdict["sex"]
+                height = reqdict["height"]
+                weight = reqdict["weight"]
+                state = reqdict["state"]
+                long = reqdict["longitude"]
+                lat = reqdict["latitude"]
+                marst = reqdict["marital"]
+                tobac = reqdict["tobacco"]
+                peepcv = reqdict["dependents"]
+                optins = reqdict["optins"]
+                anninc = reqdict["annualincome"]
+                preconds = genCatStr(simplejson.loads(reqdict["medical"]))
 
-            linestr = "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d," % (0, age, sex, height, weight, state, long, lat, marst, tobac, optins, anninc, peepcv)
-            linestr += genCatStr(preconds)
-            print(len(linestr))
+                linestr = "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d," % (0, age, sex, height, weight, state, long, lat, marst, tobac, optins, anninc, peepcv)
+                linestr += genCatStr(preconds)
+                print(len(linestr))
 
-            #bronze, silver, gold, platinum, purch = fitData(linestr)
+                #bronze, silver, gold, platinum, purch = fitData(linestr)
 
-            returndict={"bronze": 0
-                       ,"silver": 0
-                       ,"gold": 0
-                       ,"platinum": 0
-                       ,"purchase": 0}
-            #returndict["bronze"] = bronze
-            #returndict["silver"] = silver
-            #returndict["gold"]   = gold
-            #returndict["platinum"] = platinum
-            #returndict["purchase"] = round(purch)
+                returndict={"bronze": 0
+                           ,"silver": 0
+                           ,"gold": 0
+                           ,"platinum": 0
+                           ,"purchase": 0}
+                #returndict["bronze"] = bronze
+                #returndict["silver"] = silver
+                #returndict["gold"]   = gold
+                #returndict["platinum"] = platinum
+                #returndict["purchase"] = round(purch)
 
-            returnjson = simplejson.dumps(returndict)
+                returnjson = simplejson.dumps(returndict)
 
-            response = bytes(returnjson, "utf-8")  # create response
+                response = bytes(returnjson, "utf-8")  # create response
 
-            self.send_response(200)  # create header
-            self.send_header("Content-Length", str(len(response)))
-            self.end_headers()
+                self.send_response(200)  # create header
+                self.send_header("Content-Length", str(len(response)))
+                self.end_headers()
 
-            self.wfile.write(response)  # send response
-            return
-        else:
-            self.send_response(404)
-            return
+                self.wfile.write(response)  # send response
+                return
+            else:
+                self.send_response(404)
+                return
+        except:
+            self.send_response(500)
 
     def do_OPTIONS(self):
         self.send_response(200, "ok")
