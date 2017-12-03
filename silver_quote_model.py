@@ -39,7 +39,7 @@ K.set_session(sess)
 def wider_model():
 	# create model
 	model = Sequential()
-	model.add(Dense(50, input_dim=74, kernel_initializer='normal', activation='relu'))
+	model.add(Dense(50, input_dim=75, kernel_initializer='normal', activation='relu'))
 	#model.add(Dense(6, kernel_initializer='normal', activation='relu'))
 	model.add(Dense(1, kernel_initializer='normal'))
 	# Compile model
