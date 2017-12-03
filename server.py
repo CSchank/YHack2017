@@ -110,7 +110,6 @@ class myHandler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         if self.path == "/quote":
-            print(self.headers)
             length = int(self.headers["Content-Length"])
             request = str(self.rfile.read(length), "utf-8")
             print("Request: %s" % request)
@@ -155,6 +154,7 @@ class myHandler(BaseHTTPRequestHandler):
             response = bytes(returnjson, "utf-8")  # create response
 
             self.send_response(200)  # create header
+            self.send_header('Access-Control-Allow-Origin', '*')
             self.send_header("Content-Length", str(len(response)))
             self.end_headers()
 
