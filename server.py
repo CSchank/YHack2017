@@ -45,6 +45,7 @@ class myHandler(BaseHTTPRequestHandler):
 
             linestr = "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d," % (0, age, sex, height, weight, state, long, lat, marst, tobac, optins, anninc, peepcv)
             linestr += genCatStr(preconds)
+            print(len(linestr))
 
             #bronze, silver, gold, platinum, purch = fitData(linestr)
 
@@ -72,6 +73,12 @@ class myHandler(BaseHTTPRequestHandler):
         else:
             self.send_response(404)
             return
+
+    def do_OPTIONS(self):
+        self.send_response(200, "ok")
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+        self.send_header("Access-Control-Allow-Headers", "X-Requested-With")
 
 
 try:
