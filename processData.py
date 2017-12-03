@@ -86,6 +86,7 @@ def genCatStr(preconds):
     h = "High"
     m = "Medium"
     l = "Low"
+    print(preconds[0])
     for precond in preconds:
         if(precond["ICD_CODE"] == ""):
             break
