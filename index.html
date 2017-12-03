@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>ViTech - Life Insurance Estimator</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <script src="./threejs/build/three.js"></script>
+
+  <script src="./threejs/examples/js/controls/OrbitControls.js"></script>
+  <script src="./threejs/examples/js/SkyShader.js"></script>
+
+  <script src="./threejs/examples/js/Detector.js"></script>
+  <script src="./threejs/examples/js/libs/dat.gui.min.js"></script>
+  <script src="./js/app.js"></script>
+  <script src="./js/animation.js"></script>
+  <script src="./js/auto-complete.min.js"></script>
+  <script src="./js/transition.min.js"></script>
+  <script src="./js/jquery.min.js"></script>
+  <link type="text/css" rel="stylesheet" href="./css/style.css"/>
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+  <link rel="stylesheet" href="./css/auto-complete.css">
+</head>
+<body>
+<div class="container">
+  <div class="questions" id="title">
+  <h1>Welcome to the ViTech cost estimator!</h1>
+  <br>
+  </div>
+  <div class="questions">
+    <div class="text-format" id="one">
+      <form onsubmit="return false;">
+      First name: <input type="text" id="fname"><br><br>
+      Last name: <input type="text" id="lname"><br><br>
+      Email: <input type="email" id="email"><br><br>
+      Address: <input type="text" id="address"><br><br>
+      City: <input type="text" id="city"><br><br>
+      State: <input type="text" id="state"><br><br>
+      </form>
+      <!-- <div id="errors-one" class="errors"></div> -->
+      <button onClick="getNextForm(1)">Next>></button>
+    </div>
+  </div>
+  <div class="questions">
+    <div class="text-format semitransparent" id="two">
+      <form onsubmit="return false;">
+      Are you married? <input type="checkbox" id="mar"><br><br>
+      Are you employed? <input type="checkbox" id="emp"><br><br>
+      Annual income (in dollars): <input type="number" id="ann"><br><br>
+      Number of people covered in plan (including yourself): <input list="deps" type="number" id="dep"><br><br>
+      </form>
+      <datalist id="deps">
+                <option value="1">
+                <option value="2">
+                <option value="3">
+                <option value="4">
+              </datalist>
+      <button onClick="getNextForm(2)" style="border-bottom-color: 0px">Next>></button>
+    </div>
+  </div>
+  <div class="questions">
+    <div class="text-format semitransparent" id="three">
+      <form onsubmit="return false;">
+      Age:  <input type="number" id="age"><br><br>
+      Sex: <input list="sexes" style="width:3em" id="sex" />
+              <datalist id="sexes">
+                <option value="M">
+                <option value="F">
+              </datalist><br><br>
+      Height (in): <input type="number" id="height"><br><br>
+      Weight (lbs): <input type="number" id="weight"><br><br>
+      Do you consume tobacco? <input type="checkbox" id="tob"><br><br>
+      </form>
+      <button onClick="getNextForm(3)">Next>></button>
+    </div>
+  </div>
+  <div class="questions">
+    <div class="text-format semitransparent" id="four">
+      <form onsubmit="return false;" id="medical-form">
+        Existing medical conditions and risk factor:
+
+          <div id="med-container"><input id="med0" type="text" name="q" placeholder="Enter a condition here" style="color:#fff;width:75%;max-width:600px;outline:0"><input list="riskfactor0" style="width:3em" id="risk0" /></div>
+              <datalist id="riskfactor0">
+                <option value="Low">
+                <option value="Medium">
+                <option value="High">
+              </datalist><br>
+      <button id="addform" onClick="addForm()" style="width: 50%">+</button><button onClick="removeForm()" style="width: 50%; float: right;">-</button>
+
+      </form>
+      <button onClick="getNextForm(4)">Next>></button>
+    </div>
+  </div>
+  <div class="questions">
+    <div class="text-format semitransparent" id="five">
+      Coverage is $500,000 by default. Do you want additional insurance?
+      <input type="range" style="width:100%" id="additional" min="0" max="40" value="40" class="slider" onchange="updateSliderValue(this.value);"><br>
+      <div id="slideroutput">400,000</div><br>
+      <button onClick="getNextForm(5)">Submit>></button>
+    </div>
+  </div>
+</div>
+<div class="display">
+  <div class="gold">
+  </div>
+</div>
+
+
+<div id="world"></div>
+
+
+    <script>
+        var demo1 = new autoComplete({
+            selector: '#med0',
+            minChars: 1,
+            source: function(term, suggest){
+                term = term.toLowerCase();
+                var choices = ["A15-A19 Tuberculosis","B20-B20 Human immunodeficiency virus [HIV] disease","D50-D53 Nutritional anemias","E08-E13 Diabetes mellitus","E65-E68 Overweight, obesity and other hyperalimentation","E73 Lactose intolerance","E84 Cystic fibrosis","F20-F29 Schizophrenia, schizotypal, delusional, and other non-mood psychotic disorders","F70-F79 Intellectual disabilities","G10 Huntington's disease","G11 Hereditary ataxia","G20 Parkinson's disease","G30 Alzheimer's disease","G35 Multiple sclerosis","G40 Epilepsy and recurrent seizures","G43 Migraine","G47 Sleep disorders","G80 Cerebral palsy","G91 Hydrocephalus","G92 Toxic encephalopathy","H40-H42 Glaucoma","H80 Otosclerosis","I10-I16 Hypertensive diseases","I20-I25 Ischemic heart diseases","I26 Pulmonary embolism","I30 Acute pericarditis","I40 Acute myocarditis","I46 Cardiac arrest","I50 Heart failure","I63 Cerebral infarction","I95 Hypotension","J09-J18 Influenza and pneumonia","J81 Pulmonary edema","K35 Acute appendicitis","K40-K46 Hernia","K50 Crohn's disease [regional enteritis]","K51 Ulcerative colitis","K65 Peritonitis","K70 Alcoholic liver disease","K74 Fibrosis and cirrhosis of liver","K85 Acute pancreatitis","L20 Atopic dermatitis","L21 Seborrheic dermatitis","L22 Diaper dermatitis","L23 Allergic contact dermatitis","L24 Irritant contact dermatitis","L40 Psoriasis","L41 Parapsoriasis","L60 Nail disorders","L70 Acne","L71 Rosacea","L80 Vitiligo","L89 Pressure ulcer","M08 Juvenile arthritis","M10 Gout","M1A Chronic gout","M15-M19 Osteoarthritis","N17 Acute kidney failure","N18 Chronic kidney disease (CKD)","N46 Male infertility","N52 Male erectile dysfunction","N91 Absent, scanty and rare menstruation","N92 Excessive, frequent and irregular menstruation","N96 Recurrent pregnancy loss","N97 Female infertility","Q02 Microcephaly","Q05 Spina bifida","Q35-Q37 Cleft lip and/or cleft palate","Q61 Cystic kidney disease","Q90 Down syndrome","Q91 Trisomy 18 and Trisomy 13","Q96 Turner's syndrome","R17 Unspecified jaundice","S00-S09 Injuries to the head","S10-S19 Injuries to the neck","T33-T34 Frostbite","Z66-Z66 Do not resuscitate status","Z68-Z68 Body mass index (BMI)"];
+                var suggestions = [];
+                for (i=0;i<choices.length;i++)
+                    if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
+                suggest(suggestions);
+            }
+        });
+        // var demo2 = new autoComplete({
+        //     selector: '#med2',
+        //     minChars: 1,
+        //     source: function(term, suggest){
+        //         term = term.toLowerCase();
+        //         var choices = ['ActionScript', 'AppleScript', 'Asp', 'Assembly', 'BASIC', 'Batch', 'C', 'C++', 'CSS', 'Clojure', 'COBOL', 'ColdFusion', 'Erlang', 'Fortran', 'Groovy', 'Haskell', 'HTML', 'Java', 'JavaScript', 'Lisp', 'Perl', 'PHP', 'PowerShell', 'Python', 'Ruby', 'Scala', 'Scheme', 'SQL', 'TeX', 'XML'];
+        //         var suggestions = [];
+        //         for (i=0;i<choices.length;i++)
+        //             if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
+        //         suggest(suggestions);
+        //     }
+        // });
+        // var demo3 = new autoComplete({
+        //     selector: '#med3',
+        //     minChars: 1,
+        //     source: function(term, suggest){
+        //         term = term.toLowerCase();
+        //         var choices = ['ActionScript', 'AppleScript', 'Asp', 'Assembly', 'BASIC', 'Batch', 'C', 'C++', 'CSS', 'Clojure', 'COBOL', 'ColdFusion', 'Erlang', 'Fortran', 'Groovy', 'Haskell', 'HTML', 'Java', 'JavaScript', 'Lisp', 'Perl', 'PHP', 'PowerShell', 'Python', 'Ruby', 'Scala', 'Scheme', 'SQL', 'TeX', 'XML'];
+        //         var suggestions = [];
+        //         for (i=0;i<choices.length;i++)
+        //             if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
+        //         suggest(suggestions);
+        //     }
+        // });
+        // var demo4 = new autoComplete({
+        //     selector: '#med4',
+        //     minChars: 1,
+        //     source: function(term, suggest){
+        //         term = term.toLowerCase();
+        //         var choices = ['ActionScript', 'AppleScript', 'Asp', 'Assembly', 'BASIC', 'Batch', 'C', 'C++', 'CSS', 'Clojure', 'COBOL', 'ColdFusion', 'Erlang', 'Fortran', 'Groovy', 'Haskell', 'HTML', 'Java', 'JavaScript', 'Lisp', 'Perl', 'PHP', 'PowerShell', 'Python', 'Ruby', 'Scala', 'Scheme', 'SQL', 'TeX', 'XML'];
+        //         var suggestions = [];
+        //         for (i=0;i<choices.length;i++)
+        //             if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
+        //         suggest(suggestions);
+        //     }
+        // });
+        // var demo5 = new autoComplete({
+        //     selector: '#med5',
+        //     minChars: 1,
+        //     source: function(term, suggest){
+        //         term = term.toLowerCase();
+        //         var choices = ['ActionScript', 'AppleScript', 'Asp', 'Assembly', 'BASIC', 'Batch', 'C', 'C++', 'CSS', 'Clojure', 'COBOL', 'ColdFusion', 'Erlang', 'Fortran', 'Groovy', 'Haskell', 'HTML', 'Java', 'JavaScript', 'Lisp', 'Perl', 'PHP', 'PowerShell', 'Python', 'Ruby', 'Scala', 'Scheme', 'SQL', 'TeX', 'XML'];
+        //         var suggestions = [];
+        //         for (i=0;i<choices.length;i++)
+        //             if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
+        //         suggest(suggestions);
+        //     }
+        // });
+
+    </script>
+</body>
+
+</html>

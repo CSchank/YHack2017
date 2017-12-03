@@ -18,8 +18,10 @@ class myHandler(BaseHTTPRequestHandler):
         self.send_header('Content-type', 'text/html')
         self.end_headers()
         # Send the html message
-        if self.path == "/hello":
-            self.wfile.write(b"Hello Sophia!")
+        if self.path == "/" or self.path == "index.html":
+            f = open("index.html","r")
+            fstr = bytes(f.read(),"utf-8")
+            self.wfile.write(fstr)
         else:
             self.wfile.write(b"Goodbye world!")
         return
