@@ -57,7 +57,7 @@ stateL = ["NULL",
 "Wisconsin",
 "Wyoming"]
 
-stateDict = { stateL[i]: i for i in range(0,51) }
+stateDict = { stateL[i]: i for i in range(0,52) }
 
 def genCatStr(preconds):
     preconds = simplejson.loads(preconds)
@@ -374,7 +374,7 @@ f.write(genHeader())
 
 startrow  = 1
 chunksize = 500
-fetchrows = 5000
+fetchrows = 1482000
 for i in range(startrow,fetchrows+1,chunksize):
     respv_par = http.request('GET', "https://v3v10.vitechinc.com/solr/v_participant/select?indent=on&wt=json" + genOrStr(i,i+chunksize) + "&rows=1000" + "&fl=id,DOB,city,sex,longitude,latitude,state")
     respv_pard = http.request('GET', "https://v3v10.vitechinc.com/solr/v_participant_detail/select?indent=on&wt=json" + genOrStr(i,i+chunksize) + "&rows=1000" + "&fl=id,EMPLOYMENT_STATUS,PEOPLE_COVERED,TOBACCO,MARITAL_STATUS,ANNUAL_INCOME,OPTIONAL_INSURED,HEIGHT,WEIGHT,PRE_CONDITIONS")

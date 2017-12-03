@@ -1,7 +1,9 @@
 #!/usr/bin/python
 from http.server import BaseHTTPRequestHandler, HTTPServer
+import simplejson
+import numpy as np
 
-PORT_NUMBER = 80
+PORT_NUMBER = 8080
 
 
 # This class will handles any incoming request from
@@ -20,25 +22,29 @@ class myHandler(BaseHTTPRequestHandler):
         return
 
     def do_POST(self):
-        length = int(self.headers["Content-Length"])
-        request = str(self.rfile.read(length), "utf-8")
-        print("Data: " + request, "utf-8")
+        if self.path == "/quote":
+            length = int(self.headers["Content-Length"])
+            request = str(self.rfile.read(length), "utf-8")
+            jsonreq = simplejson.loads(request)
 
-        response = bytes("This is the response. \n" + request, "utf-8")  # create response
+            response = bytes("This is the response. \n" + request, "utf-8")  # create response
 
-        self.send_response(200)  # create header
-        self.send_header("Content-Length", str(len(response)))
-        self.end_headers()
+            self.send_response(200)  # create header
+            self.send_header("Content-Length", str(len(response)))
+            self.end_headers()
 
-        self.wfile.write(response)  # send response
+            self.wfile.write(response)  # send response
+            return
+        else:
+            self.send_response(404)
+            return
 
 
 try:
     # Create a web server and define the handler to manage the
     # incoming request
     server = HTTPServer(('', PORT_NUMBER), myHandler)
-    print
-    'Started httpserver on port ', PORT_NUMBER
+    print('Started httpserver on port', PORT_NUMBER)
 
     # Wait forever for incoming htto requests
     server.serve_forever()
