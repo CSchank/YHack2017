@@ -15,12 +15,18 @@ class myHandler(BaseHTTPRequestHandler):
     # Handler for the GET requests
     def do_GET(self):
         self.send_response(200)
-        self.send_header('Content-type', 'text/html')
-        self.end_headers()
         # Send the html message
         if self.path == "/" or self.path == "index.html":
+            self.send_header('Content-type', 'text/html')
+            self.end_headers()
             f = open("index.html","r")
             fstr = bytes(f.read(),"utf-8")
+            self.wfile.write(fstr)
+        elif self.path[0:3] == "/js":
+            self.send_header('Content-type', 'text/javascript')
+            self.end_headers()
+            f = open(self.path[3:],"r")
+            fstr = f.read()
             self.wfile.write(fstr)
         else:
             self.wfile.write(b"Goodbye world!")
