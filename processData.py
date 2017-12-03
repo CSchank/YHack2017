@@ -331,8 +331,8 @@ def processLine(v_par, v_pard, v_quotes):
     return linestr
 
 
-
-cats = ['a00_b99_high', 'a00_b99_med', 'a00_b99_low',
+if __name__ == "__main__":
+    cats = ['a00_b99_high', 'a00_b99_med', 'a00_b99_low',
                 'c00_d49_high', 'c00_d49_med', 'c00_d49_low',
                 'd50_d89_high', 'd50_d89_med', 'd50_d89_low',
                 'e00_e89_high', 'e00_e89_med', 'e00_e89_low',
@@ -369,26 +369,27 @@ def genOrStr(st,e):
     s += str(e - 1) + ")"
     return s
 
-f = open("data.csv", "w")
-f.write(genHeader())
+if __name__ == "__main__":
+    f = open("data.csv", "w")
+    f.write(genHeader())
 
-startrow  = 1
-chunksize = 500
-fetchrows = 1482000
-for i in range(startrow,fetchrows+1,chunksize):
-    respv_par = http.request('GET', "https://v3v10.vitechinc.com/solr/v_participant/select?indent=on&wt=json" + genOrStr(i,i+chunksize) + "&rows=1000" + "&fl=id,DOB,city,sex,longitude,latitude,state")
-    respv_pard = http.request('GET', "https://v3v10.vitechinc.com/solr/v_participant_detail/select?indent=on&wt=json" + genOrStr(i,i+chunksize) + "&rows=1000" + "&fl=id,EMPLOYMENT_STATUS,PEOPLE_COVERED,TOBACCO,MARITAL_STATUS,ANNUAL_INCOME,OPTIONAL_INSURED,HEIGHT,WEIGHT,PRE_CONDITIONS")
-    respv_quotes = http.request('GET', "https://v3v10.vitechinc.com/solr/v_quotes/select?indent=on&wt=json" + genOrStr(i,i+chunksize) + "&rows=1000" "&fl=id,BRONZE,SILVER,GOLD,PLATINUM,PURCHASED")
+    startrow  = 1
+    chunksize = 500
+    fetchrows = 1482000
+    for i in range(startrow,fetchrows+1,chunksize):
+        respv_par = http.request('GET', "https://v3v10.vitechinc.com/solr/v_participant/select?indent=on&wt=json" + genOrStr(i,i+chunksize) + "&rows=1000" + "&fl=id,DOB,city,sex,longitude,latitude,state")
+        respv_pard = http.request('GET', "https://v3v10.vitechinc.com/solr/v_participant_detail/select?indent=on&wt=json" + genOrStr(i,i+chunksize) + "&rows=1000" + "&fl=id,EMPLOYMENT_STATUS,PEOPLE_COVERED,TOBACCO,MARITAL_STATUS,ANNUAL_INCOME,OPTIONAL_INSURED,HEIGHT,WEIGHT,PRE_CONDITIONS")
+        respv_quotes = http.request('GET', "https://v3v10.vitechinc.com/solr/v_quotes/select?indent=on&wt=json" + genOrStr(i,i+chunksize) + "&rows=1000" "&fl=id,BRONZE,SILVER,GOLD,PLATINUM,PURCHASED")
 
-    print("Status: "+ str(respv_par.status))
-    v_par = simplejson.loads(respv_par.data.decode('utf-8'))
-    v_pard = simplejson.loads(respv_pard.data.decode('utf-8'))
-    v_quotes = simplejson.loads(respv_quotes.data.decode('utf-8'))
+        print("Status: "+ str(respv_par.status))
+        v_par = simplejson.loads(respv_par.data.decode('utf-8'))
+        v_pard = simplejson.loads(respv_pard.data.decode('utf-8'))
+        v_quotes = simplejson.loads(respv_quotes.data.decode('utf-8'))
 
-    for j in range(chunksize):
-        line = processLine(v_par['response']['docs'][j],v_pard['response']['docs'][j],v_quotes['response']['docs'][j]) + '\n'
-        f.write(line)
+        for j in range(chunksize):
+            line = processLine(v_par['response']['docs'][j],v_pard['response']['docs'][j],v_quotes['response']['docs'][j]) + '\n'
+            f.write(line)
 
-    print("Loaded row %d of %d (%.1f %%)" % (i+chunksize-1, fetchrows, 100*(i+chunksize-1)/fetchrows))
+        print("Loaded row %d of %d (%.1f %%)" % (i+chunksize-1, fetchrows, 100*(i+chunksize-1)/fetchrows))
 
-f.close()
+    f.close()
