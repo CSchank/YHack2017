@@ -42,7 +42,7 @@ class myHandler(BaseHTTPRequestHandler):
                 marst = reqdict["marital"]
                 tobac = reqdict["tobacco"]
                 peepcv = reqdict["dependents"]
-                optins = reqdict["optins"]
+                optins = reqdict["total"]
                 anninc = reqdict["annualincome"]
                 preconds = genCatStr(simplejson.loads(reqdict["medical"]))
 
@@ -50,18 +50,18 @@ class myHandler(BaseHTTPRequestHandler):
                 linestr += genCatStr(preconds)
                 print(len(linestr))
 
-                #bronze, silver, gold, platinum, purch = fitData(linestr)
+                bronze, silver, gold, platinum, purch = fitData(linestr)
 
                 returndict={"bronze": 0
                            ,"silver": 0
                            ,"gold": 0
                            ,"platinum": 0
                            ,"purchase": 0}
-                #returndict["bronze"] = bronze
-                #returndict["silver"] = silver
-                #returndict["gold"]   = gold
-                #returndict["platinum"] = platinum
-                #returndict["purchase"] = round(purch)
+                returndict["bronze"] = bronze
+                returndict["silver"] = silver
+                returndict["gold"]   = gold
+                returndict["platinum"] = platinum
+                returndict["purchase"] = round(purch)
 
                 returnjson = simplejson.dumps(returndict)
 
@@ -80,10 +80,7 @@ class myHandler(BaseHTTPRequestHandler):
             self.send_response(500)
 
     def do_OPTIONS(self):
-        self.send_response(200, "ok")
-        self.send_header('Access-Control-Allow-Origin', '*')
-        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
-        self.send_header("Access-Control-Allow-Headers", "X-Requested-With")
+        self.do_POST()
 
 
 try:
