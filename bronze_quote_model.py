@@ -16,17 +16,16 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
 from sklearn.metrics import mean_absolute_error
 from sklearn.externals import joblib
-from keras import callbacks
 # load dataset
 
-dataset = numpy.loadtxt("withwy.csv", delimiter=",",skiprows=1)
+dataset = numpy.loadtxt("6k.csv", delimiter=",",skiprows=1)
 #dataset = dataframe.values
 #dataframe = np.loadtxt("data.csv", delimiter=",",skiprows=1,converters = converters)
 
 #my_data = genfromtxt('housing.csv', delimiter=',')
 # split into input (X) and output (Y) variables
-numpy.random.shuffle(dataset)
-training,test = dataset[:5000,:],dataset[1481900:,:]
+#numpy.random.shuffle(dataset)
+training,test = dataset[:5500,:],dataset[5999:,:]
 X_TRAIN = training[:,1:75]
 #np.delete(X,0,1)
 Y_TRAIN = training[:,76]
