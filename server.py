@@ -3,6 +3,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import simplejson
 import numpy as np
 from processData import genCatStr
+#
 
 PORT_NUMBER = 8080
 
@@ -38,16 +39,25 @@ class myHandler(BaseHTTPRequestHandler):
             marst = reqdict["marital"]
             tobac = reqdict["tobacco"]
             peepcv = reqdict["dependents"]
+            optins = reqdict["optins"]
             anninc = reqdict["annualincome"]
-            medical = genCatStr(simplejson.loads(reqdict["medical"]))
+            preconds = genCatStr(simplejson.loads(reqdict["medical"]))
 
             linestr = "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d," % (0, age, sex, height, weight, state, long, lat, marst, tobac, optins, anninc, peepcv)
+            linestr += genCatStr(preconds)
+
+            #bronze, silver, gold, platinum, purch = fitData(linestr)
 
             returndict={"bronze": 0
                        ,"silver": 0
                        ,"gold": 0
                        ,"platinum": 0
                        ,"purchase": 0}
+            #returndict["bronze"] = bronze
+            #returndict["silver"] = silver
+            #returndict["gold"]   = gold
+            #returndict["platinum"] = platinum
+            #returndict["purchase"] = round(purch)
 
             returnjson = simplejson.dumps(returndict)
 
