@@ -233,4 +233,4 @@ for i in range(0, 1482000, 5000):
         try:
             genCatStr(v_pard['response']['docs'][i]['PRE_CONDITIONS'], v_par['response']['docs'][i]['longitude'], v_par['response']['docs'][i]['latitude'])
         except:
-            print("For Fucks Sake")
+            print("Whoops!")
