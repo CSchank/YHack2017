@@ -56,10 +56,19 @@ def fitData(testData):
 	pipe.steps.append(('nn', model))
 	picker_pred = pipe.predict(testString)
 	print(picker_pred)
-	print(bronze_pred[0][0],silver_pred[0][0],gold_pred[0][0],plat_pred[0][0],picker_pred[0][0])
-def main():
-	fitData("24,0,70,102,3,-113,32,1,0,800000,400000,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,3,0,0,0,0,0")
+	current_index = 0
+	current_cert = picker_pred[0][0]
+	for i in range(1,4):
+		if (picker_pred[0][i]>=current_cert):
+			current_index = i
+			current_cert = picker_pred[0][i]
 
+	print(bronze_pred[0][0],silver_pred[0][0],gold_pred[0][0],plat_pred[0][0],current_index)
+	return (bronze_pred[0][0],silver_pred[0][0],gold_pred[0][0],plat_pred[0][0],current_index)
+def main():
+	fitData("21,1,65,126,3,-109,35,1,0,600000,100000,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,3,0,0,0,0,0,1")
+
+	print
 	# id: 722 , ,24,46,79,123,1
 if __name__ == "__main__":
 	main()
