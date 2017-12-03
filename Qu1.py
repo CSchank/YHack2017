@@ -1,4 +1,4 @@
-import urllib3, simplejson
+import urllib3, simplejson, json
 
 http = urllib3.PoolManager()
 
@@ -12,16 +12,12 @@ def genOrStr(st,e):
     s += str(e - 1) + ")"
     return s
 
-respv_pard = http.request('GET', "https://v3v10.vitechinc.com/solr/v_participant_detail/select?indent=on&wt=json" + genOrStr(i,i+chunksize) + "&rows=1000" + "&fl=id,PRE_CONDITIONS")
-respv_par = http.request('GET', "https://v3v10.vitechinc.com/solr/v_participant/select?indent=on&wt=json" + genOrStr(i,i+chunksize) + "&rows=1000" + "&fl=id,longitude,latitude")
-v_par = simplejson.loads(respv_par.data.decode('utf-8'))
-v_pard = simplejson.loads(respv_pard.data.decode('utf-8'))
-
 #   for doc_key in document:
 #       print(doc_key, "=", document[doc_key])
 
+
 def genCatStr(preconds,longitude,latitude):
-    preconds = simplejson.loads(preconds)
+    precondin = simplejson.loads(preconds)
     labels = ['heat_1_long',    'heat_1_lat',
     'heat_2_long', 'heat_2_lat',
     'heat_3_long', 'heat_3_lat',
@@ -89,7 +85,7 @@ def genCatStr(preconds,longitude,latitude):
     heat_21_long = []
     heat_21_lat = []
 
-    for precond in preconds:
+    for precond in precondin:
         if(precond["ICD_CODE"][0] == 'A'):
             heat_1_long.append(longitude)
             heat_1_lat.append(latitude)
@@ -174,15 +170,7 @@ def genCatStr(preconds,longitude,latitude):
             heat_21_long.append(longitude)
             heat_21_lat.append(latitude)
 
-    for i in range(500):
-        genCatStr(v_pard['response']['docs'][i]["PRE_CONDITION"], v_par['response']['docs'][i]['longitude'], v_par['response']['docs'][i]['latitude'])
-
-    catstr = ""
-    for lbl in labels:
-        catstr += "%d," % dict[lbl]
-
-    return catstr,
-    heat_1_long,
+    returnArr = [ heat_1_long,
     heat_1_lat,
     heat_2_long,
     heat_2_lat,
@@ -223,4 +211,26 @@ def genCatStr(preconds,longitude,latitude):
     heat_20_long,
     heat_20_lat,
     heat_21_long,
-    heat_21_lat
+    heat_21_lat ]
+
+    with open('TonsOfArrays.json', 'a') as fi:
+        json.dump(returnArr, fi)
+
+    with open('TonsOfArrays.txt', 'a') as f:
+        json.dump(returnArr, f)
+
+    print(returnArr)
+    # return returnArr
+
+#for i in range(0, 1482000, 5000):
+
+for i in range(0, 1482000, 5000):
+    respv_pard = http.request('GET', "https://v3v10.vitechinc.com/solr/v_participant_detail/select?indent=on&wt=json" + genOrStr(i, i + chunksize) + "&rows=1000" + "&fl=id,PRE_CONDITIONS")
+    respv_par = http.request('GET', "https://v3v10.vitechinc.com/solr/v_participant/select?indent=on&wt=json" + genOrStr(i, i + chunksize) + "&rows=1000" + "&fl=id,longitude,latitude")
+    v_par = simplejson.loads(respv_par.data.decode('utf-8'))
+    v_pard = simplejson.loads(respv_pard.data.decode('utf-8'))
+    for i in range(500):
+        try:
+            genCatStr(v_pard['response']['docs'][i]['PRE_CONDITIONS'], v_par['response']['docs'][i]['longitude'], v_par['response']['docs'][i]['latitude'])
+        except:
+            print("For Fucks Sake")
