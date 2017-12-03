@@ -28,6 +28,7 @@ class myHandler(BaseHTTPRequestHandler):
         if self.path == "/quote":
             print(self.headers)
             length = int(self.headers["Content-Length"])
+            print(self.rfile)
             request = str(self.rfile.read(length), "utf-8")
             print("Request: %s" % request)
             reqdict = simplejson.loads(request)
