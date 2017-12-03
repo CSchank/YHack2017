@@ -4,7 +4,7 @@ import simplejson
 import numpy as np
 from processData import genCatStr
 
-PORT_NUMBER = 8080
+PORT_NUMBER = 80
 
 
 # This class will handles any incoming request from
