@@ -26,7 +26,7 @@ class myHandler(BaseHTTPRequestHandler):
             self.send_header('Content-type', 'text/javascript')
             self.end_headers()
             f = open("js"+self.path[3:],"r")
-            fstr = f.read()
+            fstr = bytes(f.read(),"utf-8")
             self.wfile.write(fstr)
         else:
             self.wfile.write(b"Goodbye world!")
