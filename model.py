@@ -20,14 +20,14 @@ from sklearn.pipeline import Pipeline
 # split into input (X) and output (Y) variables
 #X = dataset[:,0:12]
 #
-dataset = np.loadtxt("new.csv", delimiter=",",skiprows=1)
+dataset = np.loadtxt("data20k.csv", delimiter=",",skiprows=1)
 #dataset = dataframe.values
 #dataframe = np.loadtxt("data.csv", delimiter=",",skiprows=1,converters = converters)
 
 #my_data = genfromtxt('housing.csv', delimiter=',')
 # split into input (X) and output (Y) variables
 np.random.shuffle(dataset)
-training,test = dataset[:1000,:],dataset[1000:,:]
+training,test = dataset[:5000,:],dataset[5000:,:]
 X_TRAIN = training[:,1:75]
 #np.delete(X,0,1)
 Y_TRAIN = training[:,79]
