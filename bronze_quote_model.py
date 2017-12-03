@@ -25,12 +25,12 @@ dataset = numpy.loadtxt("6k.csv", delimiter=",",skiprows=1)
 #my_data = genfromtxt('housing.csv', delimiter=',')
 # split into input (X) and output (Y) variables
 #numpy.random.shuffle(dataset)
-training,test = dataset[:5500,:],dataset[5999:,:]
-X_TRAIN = training[:,1:75]
+training,test = dataset[:5500,:],dataset[5998:,:]
+X_TRAIN = training[:,1:76]
 #np.delete(X,0,1)
 Y_TRAIN = training[:,76]
 
-X_TEST=test[:,1:75]
+X_TEST=test[:,1:76]
 Y_TEST=test[:,76]
 # define base model
 sess = tf.Session()
