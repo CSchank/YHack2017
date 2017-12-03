@@ -3,6 +3,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import simplejson
 import numpy as np
 from processData import genCatStr
+from fitData import fitData
 #
 
 PORT_NUMBER = 8080
