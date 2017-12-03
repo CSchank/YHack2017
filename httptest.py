@@ -14,7 +14,7 @@ class myHandler(BaseHTTPRequestHandler):
         self.end_headers()
         # Send the html message
         if self.path == "/hello":
-            self.wfile.write(b"Hello World !")
+            self.wfile.write(b"Hello Sophia!")
         else:
             self.wfile.write(b"Goodbye world!")
         return
