@@ -17,13 +17,13 @@
   <script src="./js/transition.min.js"></script>
   <script src="./js/jquery.min.js"></script>
   <link type="text/css" rel="stylesheet" href="./css/style.css"/>
-  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Raleway:100" rel="stylesheet">
   <link rel="stylesheet" href="./css/auto-complete.css">
 </head>
 <body>
 <div class="container">
   <div class="questions" id="title">
-  <h1>Welcome to the ViTech cost estimator!</h1>
+  <h1>Welcome to the ViTech life insurance cost estimator!</h1>
   <br>
   </div>
   <div class="questions">
@@ -77,8 +77,7 @@
     <div class="text-format semitransparent" id="four">
       <form onsubmit="return false;" id="medical-form">
         Existing medical conditions and risk factor:
-
-          <div id="med-container"><input id="med0" type="text" name="q" placeholder="Enter a condition here" style="color:#fff;width:75%;max-width:600px;outline:0"><input list="riskfactor0" style="width:3em" id="risk0" /></div>
+          <div id="med-container"><input id="med0" type="text" name="q" style="color:#fff;width:75%;max-width:600px;outline:0"><input list="riskfactor0" style="width:3em" id="risk0" /></div>
               <datalist id="riskfactor0">
                 <option value="Low">
                 <option value="Medium">
@@ -98,10 +97,83 @@
       <button onClick="getNextForm(5)">Submit>></button>
     </div>
   </div>
-</div>
-<div class="display">
-  <div class="gold">
+
+
+
+
+  <div id="loading" class="lds-css ng-scope undisplay">
+  <div style="width:100%;height:100%" class="lds-eclipse">
+    <div></div>
   </div>
+<style type="text/css">@keyframes lds-eclipse {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  50% {
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes lds-eclipse {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  50% {
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+.lds-eclipse {
+  position: relative;
+}
+.lds-eclipse div {
+  position: absolute;
+  -webkit-animation: lds-eclipse 1s linear infinite;
+  animation: lds-eclipse 1s linear infinite;
+  width: 160px;
+  height: 160px;
+  top: 20px;
+  left: 20px;
+  border-radius: 50%;
+  box-shadow: 0 4px 0 0 #ffffff;
+  -webkit-transform-origin: 80px 82px;
+  transform-origin: 80px 82px;
+  margin-left: 50%;
+  margin-top: 50%;
+  z-index: 100;
+}
+.lds-eclipse {
+  width: 200px !important;
+  height: 200px !important;
+  -webkit-transform: translate(-100px, -100px) scale(1) translate(100px, 100px);
+  transform: translate(-100px, -100px) scale(1) translate(100px, 100px);
+}
+</style></div>
+<div id="blocker"></div>
+
+
+  <div id="results" class="undisplay questions">
+    <a href="https://www.vitechinc.com/"><div id="resultblock0" class="floatleft bronze undisplay">
+    </div></a>
+    <a href="https://www.vitechinc.com/"><div id="resultblock1" class="floatleft silver undisplay">
+    </div></a>
+    <a href="https://www.vitechinc.com/"><div id="resultblock2" class="floatleft gold undisplay">
+    </div></a>
+    <a href="https://www.vitechinc.com/"><div id="resultblock3" class="floatleft platinum undisplay">
+    </div></a>
+  </div>
+</div>
+
 </div>
 
 
@@ -121,54 +193,6 @@
                 suggest(suggestions);
             }
         });
-        // var demo2 = new autoComplete({
-        //     selector: '#med2',
-        //     minChars: 1,
-        //     source: function(term, suggest){
-        //         term = term.toLowerCase();
-        //         var choices = ['ActionScript', 'AppleScript', 'Asp', 'Assembly', 'BASIC', 'Batch', 'C', 'C++', 'CSS', 'Clojure', 'COBOL', 'ColdFusion', 'Erlang', 'Fortran', 'Groovy', 'Haskell', 'HTML', 'Java', 'JavaScript', 'Lisp', 'Perl', 'PHP', 'PowerShell', 'Python', 'Ruby', 'Scala', 'Scheme', 'SQL', 'TeX', 'XML'];
-        //         var suggestions = [];
-        //         for (i=0;i<choices.length;i++)
-        //             if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
-        //         suggest(suggestions);
-        //     }
-        // });
-        // var demo3 = new autoComplete({
-        //     selector: '#med3',
-        //     minChars: 1,
-        //     source: function(term, suggest){
-        //         term = term.toLowerCase();
-        //         var choices = ['ActionScript', 'AppleScript', 'Asp', 'Assembly', 'BASIC', 'Batch', 'C', 'C++', 'CSS', 'Clojure', 'COBOL', 'ColdFusion', 'Erlang', 'Fortran', 'Groovy', 'Haskell', 'HTML', 'Java', 'JavaScript', 'Lisp', 'Perl', 'PHP', 'PowerShell', 'Python', 'Ruby', 'Scala', 'Scheme', 'SQL', 'TeX', 'XML'];
-        //         var suggestions = [];
-        //         for (i=0;i<choices.length;i++)
-        //             if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
-        //         suggest(suggestions);
-        //     }
-        // });
-        // var demo4 = new autoComplete({
-        //     selector: '#med4',
-        //     minChars: 1,
-        //     source: function(term, suggest){
-        //         term = term.toLowerCase();
-        //         var choices = ['ActionScript', 'AppleScript', 'Asp', 'Assembly', 'BASIC', 'Batch', 'C', 'C++', 'CSS', 'Clojure', 'COBOL', 'ColdFusion', 'Erlang', 'Fortran', 'Groovy', 'Haskell', 'HTML', 'Java', 'JavaScript', 'Lisp', 'Perl', 'PHP', 'PowerShell', 'Python', 'Ruby', 'Scala', 'Scheme', 'SQL', 'TeX', 'XML'];
-        //         var suggestions = [];
-        //         for (i=0;i<choices.length;i++)
-        //             if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
-        //         suggest(suggestions);
-        //     }
-        // });
-        // var demo5 = new autoComplete({
-        //     selector: '#med5',
-        //     minChars: 1,
-        //     source: function(term, suggest){
-        //         term = term.toLowerCase();
-        //         var choices = ['ActionScript', 'AppleScript', 'Asp', 'Assembly', 'BASIC', 'Batch', 'C', 'C++', 'CSS', 'Clojure', 'COBOL', 'ColdFusion', 'Erlang', 'Fortran', 'Groovy', 'Haskell', 'HTML', 'Java', 'JavaScript', 'Lisp', 'Perl', 'PHP', 'PowerShell', 'Python', 'Ruby', 'Scala', 'Scheme', 'SQL', 'TeX', 'XML'];
-        //         var suggestions = [];
-        //         for (i=0;i<choices.length;i++)
-        //             if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
-        //         suggest(suggestions);
-        //     }
-        // });
 
     </script>
 </body>

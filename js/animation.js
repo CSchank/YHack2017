@@ -1,3 +1,4 @@
+
 var info = {
     firstName: null,
     lastname: null,
@@ -9,18 +10,25 @@ var info = {
     state: null,
     maritalstatus: null,
     employmentstatus: null,
-    annualincome: null,
-    dependents: null,
-    age: null,
-    sex: null,
-    height: null,
-    weight: null,
-    tobacco: null,
+    annualincome: 50000,
+    dependents: 1,
+    age: 18,
+    sex: "M",
+    height: 50,
+    weight: 100,
+    tobacco: false,
     medical: [],
     total: 500000,
 }
 var url = "http://159.203.2.233/quote"
 var mednum = 0;
+var response = {
+    "bronze": 500,
+    "silver": 600,
+    "gold": 700,
+    "platinum": 800,
+    "purchase": 1,
+};
 
 
 function getNextForm(param) {
@@ -76,11 +84,14 @@ function getNextForm(param) {
                 info.employmentstatus = document.getElementById("emp").checked? 1 : 0;
                 info.annualincome = document.getElementById("ann").value; //number between range
                 if (info.annualincome < 0 || info.annualincome > 1000000) {
-                    alert("Please enter income in range 0-1000000");
+                    alert("Please enter income in range 0 to 1000000");
                     return;
                 }
                 info.dependents = document.getElementById("dep").value; //1, 2, 3, 4
-                // if (maritalstatus == null)
+                if (info.dependents < 1 || info.dependents > 4) {
+                    alert("Please enter dependents in range 1 to 4");
+                    return;
+                }
                 animatenone(elem);
                 changeTransparency("three");
                 break;
@@ -92,10 +103,10 @@ function getNextForm(param) {
                     return;
                 }
                 info.sex = document.getElementById("sex").value; //'M' or 'F' m is 0, F is 1
-                // if (!(sex.equals("F") || sex.equals("M")) {
-                //     alert("Please enter M or F for sex");
-                //     return;
-                // }
+                if (!(info.sex == "F" || info.sex == "M")) {
+                    alert("Please enter M or F for sex");
+                    return;
+                }
                 info.height = document.getElementById("height").value; //50max is 80
                 if (info.height < 50 || info.height > 80) {
                     alert("Please enter height in range 50 and 80");
@@ -114,8 +125,9 @@ function getNextForm(param) {
                 var elem = document.getElementById("four");
                 for (var i = 0; i <= mednum; i++) {
                     var med = document.getElementById("med"+i).value.split(" ")[0];
+                    if (!med) continue;
                     var risk = document.getElementById("risk"+i).value;
-                    if (risk != "Low" && risk != "Medium" && risk != "High") {
+                    if (risk != "Low" && risk != "Medium" && risk != "High" && med) {
                         alert("Risk must be 'Low', 'Medium', or 'High'.");
                         return;
                     }
@@ -126,7 +138,7 @@ function getNextForm(param) {
                 break;
             case (5):
                 var elem = document.getElementById("five");
-                info.total += document.getElementById("additional").value;
+                info.total = info.total + document.getElementById("additional").value * 10000;
                 animatenone(elem);
                 console.log(info);
                 submit();
@@ -142,10 +154,92 @@ function submit() {
     xhr.onload = function() {
         console.log(xhr.status);
         console.log(xhr.responseText);
+        response = JSON.parse(xhr.responseText);
+        loadPlans();
+        $("#loading").addClass("undisplay");
     }
     console.log(xhr.status);
     console.log(xhr.responseText);
+    produceLoading();
 
+}
+
+function produceLoading() {
+    $("#loading").removeClass("undisplay");
+}
+
+function loadPlans() {
+    $("#blocker").addClass("undisplay");
+    var plan;
+    var price;
+    var key;
+    switch(response.purchase) {
+        case 0:
+            plan = "Bronze";
+            key = "bronze";
+            price = response.bronze;
+            break;
+        case 1:
+            plan = "Silver";
+            key = "silver";
+            price = response.silver;
+            break;
+        case 2:
+            plan = "Gold";
+            key = "gold";
+            price = response.gold;
+            break;
+        case 3:
+            plan = "Platinum";
+            key = "platinum";
+            price = response.platinum;
+            break;
+        default:
+            alert("error");
+    }
+    // $("#preferred").html(function() {
+    //     return plan + "<br> $" + price;
+    // });
+    // $("#preferred").removeClass("undisplay");
+    // $("#preferred").addClass(key);
+    $("#title").children().text("Your preferred plan: "+plan);
+    for (var i = 0; i < 4; i++) {
+            var  block = "#resultblock"+i;
+            console.log(block);
+
+            switch (i) {
+                case 0:
+                    $(block).html(function() {
+                        return "Bronze <br> $" + response.bronze;
+                    });
+                    break;
+                case 1:
+                    $(block).html(function() {
+                        return "Silver <br> $" + response.silver;
+                    });
+                    break;
+                case 2:
+                    $(block).html(function() {
+                        return "Gold <br> $" + response.gold;
+                    });
+                    break;
+                case 3:
+                    $(block).html(function() {
+                        return "Platinum <br> $" + response.platinum;
+
+                    });
+                    break;
+            }
+            $(block).removeClass("undisplay");
+            if (i == response.purchase) {
+                console.log("found match")
+                $(block).css({
+                         "border-width": "5px",
+                        "border-color":"#fff",
+                        "border-style": "solid"})
+            };
+    }
+    $("#results").removeClass("undisplay");
 }
 
 function changeTransparency(elem, transparency) {
@@ -184,7 +278,7 @@ function addForm() {
 }
 
 function removeForm() {
-    if (mednum <= 0) {
+    if (mednum < 0) {
         return;
     }
 
