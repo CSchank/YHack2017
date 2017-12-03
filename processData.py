@@ -86,7 +86,10 @@ def genCatStr(preconds):
     h = "High"
     m = "Medium"
     l = "Low"
+    print("Hello", preconds[0])
     for precond in preconds:
+        if(precond["ICD_CODE"] == ""):
+            break
         if(precond["ICD_CODE"][0] == 'A'):
             if (precond[rf] == h):
                 dict["a00_b99_high"]+=1
