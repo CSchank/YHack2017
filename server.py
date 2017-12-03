@@ -131,7 +131,8 @@ class myHandler(BaseHTTPRequestHandler):
             else:
                 self.send_response(404)
                 return
-        except:
+        except Exception as e:
+            print(e)
             self.send_response(500)
 
 
