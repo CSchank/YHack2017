@@ -60,7 +60,6 @@ stateL = ["NULL",
 stateDict = { stateL[i]: i for i in range(0,52) }
 
 def genCatStr(preconds):
-    preconds = simplejson.loads(preconds)
     labels = ['a00_b99_high', 'a00_b99_med', 'a00_b99_low',
     'c00_d49_high', 'c00_d49_med', 'c00_d49_low',
     'd50_d89_high', 'd50_d89_med', 'd50_d89_low',
