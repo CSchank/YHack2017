@@ -45,7 +45,10 @@ class myHandler(BaseHTTPRequestHandler):
             elif self.path[-2:] == "js":
                 self.send_header('Content-type', 'text/javascript')
                 self.end_headers()
-            f = open(self.path,"r")
+            try:
+                f = open(self.path,"r")
+            except:
+                print("Unable to serve file %s. File not found." % self.path)
             fstr = bytes(f.read(),"utf-8")
             self.wfile.write(fstr)
             f.close()
