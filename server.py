@@ -117,7 +117,7 @@ class myHandler(BaseHTTPRequestHandler):
             reqdict = simplejson.loads(request)
             print(reqdict)
             age = int(reqdict["age"])
-            sex = reqdict["sex"]
+            sex = 0 if reqdict["sex"] == "M" else 1
             height = int(reqdict["height"])
             weight = int(reqdict["weight"])
             try:
