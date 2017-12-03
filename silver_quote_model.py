@@ -29,10 +29,10 @@ numpy.random.shuffle(dataset)
 training,test = dataset[:20,:],dataset[19700:,:]
 X_TRAIN = training[:,1:75]
 #np.delete(X,0,1)
-Y_TRAIN = training[:,79]
+Y_TRAIN = training[:,77]
 
 X_TEST=test[:,1:75]
-Y_TEST=test[:,79]
+Y_TEST=test[:,77]
 # define base model
 sess = tf.Session()
 K.set_session(sess)
@@ -63,7 +63,7 @@ results = cross_val_score(pipeline, X_TRAIN, Y_TRAIN, cv=kfold)
 print("Wider: %.2f (%.2f) MSE" % (results.mean(), results.std()))
 pipeline.fit(X_TRAIN,Y_TRAIN)
 pred = pipeline.predict(X_TEST)
-# print(pred)
+print(pred)
 # print(pred.shape)
 # print (mean_absolute_error(Y_TEST,pred))
 directory = os.path.dirname(os.path.realpath(__file__))
