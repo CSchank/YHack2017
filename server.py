@@ -144,10 +144,10 @@ class myHandler(BaseHTTPRequestHandler):
                        ,"gold": 0
                        ,"platinum": 0
                        ,"purchase": 0}
-            returndict["bronze"] = bronze
-            returndict["silver"] = silver
-            returndict["gold"]   = gold
-            returndict["platinum"] = platinum
+            returndict["bronze"] = round(bronze.item())
+            returndict["silver"] = round(silver.item())
+            returndict["gold"]   = round(gold.item())
+            returndict["platinum"] = round(platinum.item())
             returndict["purchase"] = round(purch)
 
             returnjson = simplejson.dumps(returndict)
