@@ -10,13 +10,13 @@ var info = {
     state: null,
     maritalstatus: null,
     employmentstatus: null,
-    annualincome: 50000,
-    dependents: 1,
-    age: 18,
-    sex: "M",
-    height: 50,
-    weight: 100,
-    tobacco: false,
+    annualincome: null,
+    dependents: null,
+    age: null,
+    sex: null,
+    height: null,
+    weight: null,
+    tobacco: null,
     medical: [],
     total: 500000,
 }
@@ -83,7 +83,7 @@ function getNextForm(param) {
                 info.maritalstatus = document.getElementById("mar").checked? 1 : 0;
                 info.employmentstatus = document.getElementById("emp").checked? 1 : 0;
                 info.annualincome = document.getElementById("ann").value; //number between range
-                if (info.annualincome < 0 || info.annualincome > 1000000) {
+                if (!info.annualincome || info.annualincome < 0 || info.annualincome > 1000000) {
                     alert("Please enter income in range 0 to 1000000");
                     return;
                 }

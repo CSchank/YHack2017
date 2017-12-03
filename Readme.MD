@@ -1,4 +1,4 @@
-#Vitech Insurance Quote Predictor and Plan Recommender: Mcmaster Team #1 (The Beard)
+#Vitech Insurance Quote Predictor and Plan Recommender: McMaster Team #1 (The Beard)
 **Sorry for the mess, we wish we had more time to clean up!**
 
 ##Screenshots and some nifty images available in the "Images" folder 
