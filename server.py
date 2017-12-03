@@ -47,11 +47,11 @@ class myHandler(BaseHTTPRequestHandler):
                 self.end_headers()
             try:
                 f = open(self.path,"r")
+                fstr = bytes(f.read(), "utf-8")
+                self.wfile.write(fstr)
+                f.close()
             except:
                 print("Unable to serve file %s. File not found." % self.path)
-            fstr = bytes(f.read(),"utf-8")
-            self.wfile.write(fstr)
-            f.close()
         return
 
     def do_POST(self):
