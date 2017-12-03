@@ -19,20 +19,20 @@ from sklearn.externals import joblib
 from keras import callbacks
 # load dataset
 
-dataset = numpy.loadtxt("withwy.csv", delimiter=",",skiprows=1)
+dataset = numpy.loadtxt("new.csv", delimiter=",",skiprows=1)
 #dataset = dataframe.values
 #dataframe = np.loadtxt("data.csv", delimiter=",",skiprows=1,converters = converters)
 
 #my_data = genfromtxt('housing.csv', delimiter=',')
 # split into input (X) and output (Y) variables
 numpy.random.shuffle(dataset)
-training,test = dataset[:5000,:],dataset[1481900:,:]
+training,test = dataset[:1000,:],dataset[4500:,:]
 X_TRAIN = training[:,1:75]
 #np.delete(X,0,1)
-Y_TRAIN = training[:,79]
+Y_TRAIN = training[:,80]
 
 X_TEST=test[:,1:75]
-Y_TEST=test[:,79]
+Y_TEST=test[:,80]
 # define base model
 sess = tf.Session()
 K.set_session(sess)
@@ -71,10 +71,10 @@ model_step = pipeline.steps.pop(-1)[1]
 joblib.dump(pipeline, os.path.join(directory,'pipeline_plat.pkl'))
 models.save_model(model_step.model,os.path.join(directory,'model_plat.h5'))
 
-print("test")
-directory2 = os.path.dirname(os.path.realpath(__file__))
-pipe = joblib.load(os.path.join(directory2, 'pipeline_plat.pkl'))
-model = models.load_model(os.path.join(directory2, 'model_plat.h5'))
-pipe.steps.append(('nn', model))
-pred = pipe.predict(X_TEST)
-print(pred)
+
+# directory2 = os.path.dirname(os.path.realpath(__file__))
+# pipe = joblib.load(os.path.join(directory2, 'pipeline.pkl'))
+# model = models.load_model(os.path.join(directory2, 'model.h5'))
+# pipe.steps.append(('nn', model))
+# pred = pipe.predict(X_TEST)
+# print(pred)
