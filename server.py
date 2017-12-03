@@ -133,7 +133,7 @@ class myHandler(BaseHTTPRequestHandler):
             anninc = int(reqdict["annualincome"])
             preconds = reqdict["medical"]
 
-            linestr = "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d," % (0, age, sex, height, weight, state, long, lat, marst, tobac, optins, anninc, peepcv)
+            linestr = "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d," % (age, sex, height, weight, state, long, lat, marst, tobac, optins, anninc, peepcv)
             linestr += genCatStr(preconds)
             print(len(linestr))
 
