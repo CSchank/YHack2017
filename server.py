@@ -46,7 +46,7 @@ class myHandler(BaseHTTPRequestHandler):
                 self.send_header('Content-type', 'text/javascript')
                 self.end_headers()
             try:
-                f = open(self.path,"r")
+                f = open(self.path[1:],"r")
                 fstr = bytes(f.read(), "utf-8")
                 self.wfile.write(fstr)
                 f.close()
