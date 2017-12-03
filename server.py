@@ -6,7 +6,7 @@ from processData import genCatStr
 from fitData import fitData
 #
 
-PORT_NUMBER = 8080
+PORT_NUMBER = 80
 
 
 # This class will handles any incoming request from
