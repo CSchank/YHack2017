@@ -44,7 +44,7 @@ class myHandler(BaseHTTPRequestHandler):
             peepcv = reqdict["dependents"]
             optins = reqdict["total"]
             anninc = reqdict["annualincome"]
-            preconds = genCatStr(simplejson.loads(reqdict["medical"]))
+            preconds = genCatStr(reqdict["medical"])
 
             linestr = "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d," % (0, age, sex, height, weight, state, long, lat, marst, tobac, optins, anninc, peepcv)
             linestr += genCatStr(preconds)
