@@ -23,20 +23,26 @@ class myHandler(BaseHTTPRequestHandler):
             f = open("index.html","r")
             fstr = bytes(f.read(),"utf-8")
             self.wfile.write(fstr)
+            f.close()
         elif self.path[0:3] == "/js":
             self.send_header('Content-type', 'text/javascript')
             self.end_headers()
             f = open("js"+self.path[3:],"r")
             fstr = bytes(f.read(),"utf-8")
             self.wfile.write(fstr)
+            f.close()
         elif self.path[0:4] == "/css":
             self.send_header('Content-type', 'text/javascript')
             self.end_headers()
             f = open("css"+self.path[4:],"r")
             fstr = bytes(f.read(),"utf-8")
             self.wfile.write(fstr)
+            f.close()
         else:
-            self.wfile.write(b"Goodbye world!")
+            f = open("js"+self.path[3:],"r")
+            fstr = bytes(f.read(),"utf-8")
+            self.wfile.write(fstr)
+            f.close()
         return
 
     def do_POST(self):
