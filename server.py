@@ -83,6 +83,7 @@ class myHandler(BaseHTTPRequestHandler):
         self.send_header('Access-Control-Allow-Credentials', 'true')
         self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
         self.send_header("Access-Control-Allow-Headers", "X-Requested-With, Content-type")
+        self.send_header("Access-Control-Max-Age", "36000")
 
 try:
     # Create a web server and define the handler to manage the
