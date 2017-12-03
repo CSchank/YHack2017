@@ -131,7 +131,7 @@ class myHandler(BaseHTTPRequestHandler):
             peepcv = int(reqdict["dependents"])
             optins = reqdict["total"]
             anninc = int(reqdict["annualincome"])
-            preconds = genCatStr(reqdict["medical"])
+            preconds = reqdict["medical"]
 
             linestr = "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d," % (0, age, sex, height, weight, state, long, lat, marst, tobac, optins, anninc, peepcv)
             linestr += genCatStr(preconds)
