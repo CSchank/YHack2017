@@ -24,22 +24,28 @@ class myHandler(BaseHTTPRequestHandler):
             fstr = bytes(f.read(),"utf-8")
             self.wfile.write(fstr)
             f.close()
-        elif self.path[0:3] == "/js":
-            self.send_header('Content-type', 'text/javascript')
-            self.end_headers()
-            f = open("js"+self.path[3:],"r")
-            fstr = bytes(f.read(),"utf-8")
-            self.wfile.write(fstr)
-            f.close()
-        elif self.path[0:4] == "/css":
-            self.send_header('Content-type', 'text/javascript')
-            self.end_headers()
-            f = open("css"+self.path[4:],"r")
-            fstr = bytes(f.read(),"utf-8")
-            self.wfile.write(fstr)
-            f.close()
+        #elif self.path[0:3] == "/js":
+        #    self.send_header('Content-type', 'text/javascript')
+        #    self.end_headers()
+        #    f = open("js"+self.path[3:],"r")
+        #    fstr = bytes(f.read(),"utf-8")
+        #    self.wfile.write(fstr)
+        #    f.close()
+        #elif self.path[0:4] == "/css":
+        #    self.send_header('Content-type', 'text/javascript')
+        #    self.end_headers()
+        #    f = open("css"+self.path[4:],"r")
+        #    fstr = bytes(f.read(),"utf-8")
+        #    self.wfile.write(fstr)
+        #    f.close()
         else:
-            f = open("js"+self.path[3:],"r")
+            if self.path[-3:] == "css":
+                self.send_header('Content-type', 'text/css')
+                self.end_headers()
+            elif self.path[-2:] == "js":
+                self.send_header('Content-type', 'text/javascript')
+                self.end_headers()
+            f = open(self.path,"r")
             fstr = bytes(f.read(),"utf-8")
             self.wfile.write(fstr)
             f.close()
