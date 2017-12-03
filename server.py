@@ -15,6 +15,7 @@ class myHandler(BaseHTTPRequestHandler):
     # Handler for the GET requests
     def do_GET(self):
         self.send_response(200)
+        print("Get request: %s" % self.path)
         # Send the html message
         if self.path == "/" or self.path == "index.html":
             self.send_header('Content-type', 'text/html')
