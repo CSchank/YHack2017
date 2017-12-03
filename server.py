@@ -25,7 +25,7 @@ class myHandler(BaseHTTPRequestHandler):
         elif self.path[0:3] == "/js":
             self.send_header('Content-type', 'text/javascript')
             self.end_headers()
-            f = open("/js"+self.path[3:],"r")
+            f = open("js"+self.path[3:],"r")
             fstr = f.read()
             self.wfile.write(fstr)
         else:
