@@ -79,7 +79,8 @@ class myHandler(BaseHTTPRequestHandler):
 
     def do_OPTIONS(self):
         if self.path == "/quote":
-            print(self.headers)
+            print("Headers: ", self.headers)
+            print("Rfile: ", self.rfile)
             length = int(self.headers["Content-Length"])
             request = str(self.rfile.read(length), "utf-8")
             print("Request: %s" % request)
