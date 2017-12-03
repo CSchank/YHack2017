@@ -4,6 +4,7 @@ import simplejson
 import numpy as np
 from processData import genCatStr
 from fitData import fitData
+import gc
 
 stateL = ["NULL",
 "Alabama",
@@ -159,6 +160,7 @@ class myHandler(BaseHTTPRequestHandler):
             self.end_headers()
 
             self.wfile.write(response)  # send response
+            gc.collect()
             return
         else:
             self.send_response(404)
