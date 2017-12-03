@@ -28,7 +28,6 @@ class myHandler(BaseHTTPRequestHandler):
         if self.path == "/quote":
             print(self.headers)
             length = int(self.headers["Content-Length"])
-            print(self.rfile)
             request = str(self.rfile.read(length), "utf-8")
             print("Request: %s" % request)
             reqdict = simplejson.loads(request)
@@ -40,7 +39,7 @@ class myHandler(BaseHTTPRequestHandler):
             state = reqdict["state"]
             long = reqdict["longitude"]
             lat = reqdict["latitude"]
-            marst = reqdict["marital"]
+            marst = reqdict["maritalstatus"]
             tobac = reqdict["tobacco"]
             peepcv = reqdict["dependents"]
             optins = reqdict["total"]
