@@ -28,6 +28,12 @@ class myHandler(BaseHTTPRequestHandler):
             f = open("js"+self.path[3:],"r")
             fstr = bytes(f.read(),"utf-8")
             self.wfile.write(fstr)
+        elif self.path[0:4] == "/css":
+            self.send_header('Content-type', 'text/javascript')
+            self.end_headers()
+            f = open("css"+self.path[4:],"r")
+            fstr = bytes(f.read(),"utf-8")
+            self.wfile.write(fstr)
         else:
             self.wfile.write(b"Goodbye world!")
         return
