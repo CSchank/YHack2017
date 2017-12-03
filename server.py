@@ -2,6 +2,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import simplejson
 import numpy as np
+from processData import genCatStr
 
 PORT_NUMBER = 8080
 
@@ -25,9 +26,32 @@ class myHandler(BaseHTTPRequestHandler):
         if self.path == "/quote":
             length = int(self.headers["Content-Length"])
             request = str(self.rfile.read(length), "utf-8")
-            jsonreq = simplejson.loads(request)
+            reqdict = simplejson.loads(request)
+            print(reqdict)
+            age = reqdict["age"]
+            sex = reqdict["sex"]
+            height = reqdict["height"]
+            weight = reqdict["weight"]
+            state = reqdict["state"]
+            long = reqdict["longitude"]
+            lat = reqdict["latitude"]
+            marst = reqdict["marital"]
+            tobac = reqdict["tobacco"]
+            peepcv = reqdict["dependents"]
+            anninc = reqdict["annualincome"]
+            medical = genCatStr(simplejson.loads(reqdict["medical"]))
 
-            response = bytes("This is the response. \n" + request, "utf-8")  # create response
+            linestr = "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d," % (0, age, sex, height, weight, state, long, lat, marst, tobac, optins, anninc, peepcv)
+
+            returndict={"bronze": 0
+                       ,"silver": 0
+                       ,"gold": 0
+                       ,"platinum": 0
+                       ,"purchase": 0}
+
+            returnjson = simplejson.dumps(returndict)
+
+            response = bytes(returnjson, "utf-8")  # create response
 
             self.send_response(200)  # create header
             self.send_header("Content-Length", str(len(response)))
