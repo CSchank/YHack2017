@@ -77,12 +77,12 @@ class myHandler(BaseHTTPRequestHandler):
             self.send_response(404)
             return
 
-        def do_OPTIONS(self):
-            self.send_response(200, "ok")
-            self.send_header('Access-Control-Allow-Origin', '*')
-            self.send_header('Access-Control-Allow-Credentials', 'true')
-            self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
-            self.send_header("Access-Control-Allow-Headers", "X-Requested-With, Content-type")
+    def do_OPTIONS(self):
+        self.send_response(200, "ok")
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Credentials', 'true')
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+        self.send_header("Access-Control-Allow-Headers", "X-Requested-With, Content-type")
 
 try:
     # Create a web server and define the handler to manage the
