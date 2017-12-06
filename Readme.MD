@@ -2,6 +2,13 @@
 
 ## See full description and pretty pictures on [Devpost](https://devpost.com/software/vitech-insurance-quote-predictor-and-plan-recommender)
 
+## Vitech challenge description (from YHack 2017 Devpost)
+
+Insurance company Intellisurance provides its life insurance product to its 1.4M customers. They offer 4 plans - Bronze, Silver, Gold and Platinum. The base price for all these 4 plans is fixed, but the monthly premium each individual pays for the plan varies based on factors like age, tobacco usage, pre-conditions, city, state etc. The dataset contains the details of 1.4M customers, their demographic information and other details that affect their monthly premiums. The dataset also gives the information regarding which plans were purchased. Note: The customer can purchase only one plan. 
+  
+Challenge: Create data visualizations, use machine learning to predict the purchased plans or even the pricing of premiums, make an interface for customers to give their details and compare the plans. More details: https://v3v10.vitechinc.com/yhack 
+
+## Description of our solution
 
 Quoting the Price (Machine Learning):
 --------------
