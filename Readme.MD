@@ -1,12 +1,7 @@
 # Vitech Insurance Quote Predictor and Plan Recommender: McMaster Team #1 (The Beard)
-**Sorry for the mess, we wish we had more time to clean up!**
 
-## Screenshots and some nifty images available in the "Images" folder 
-## Important Notes:
-- WIFI is super unreliable, front end may not connect with server
-- 
-- Front-end may be slow as the server side code wasn't fully realized
-- Front-end relies on the server side to be hosted (on a users laptop)
+## See full description and pretty pictures on [Devpost](https://devpost.com/software/vitech-insurance-quote-predictor-and-plan-recommender)
+
 
 Quoting the Price (Machine Learning):
 --------------
