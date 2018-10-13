@@ -60,7 +60,7 @@ stateL = ["NULL",
 
 stateDict = { stateL[i]: i for i in range(0,52) }
 
-PORT_NUMBER = 80
+PORT_NUMBER = 8080
 
 
 # This class will handles any incoming request from

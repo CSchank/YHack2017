@@ -20,7 +20,7 @@ var info = {
     medical: [],
     total: 500000,
 }
-var url = "http://159.203.2.233/quote"
+var url = "http://localhost:8080/quote"
 var mednum = 0;
 var response = {
     "bronze": 500,
